@@ -4,9 +4,9 @@ import * as fs from 'node:fs';
 
 async function main() {
 	const wallet = new ethers.Wallet(
-		process.env.PRIVATE_KEY,
+		process.env.PRIVATE_KEY!,
 	);
-	const encryptedJsonKey = await wallet.encrypt(process.env.PRIVATE_KEY_PASS);
+	const encryptedJsonKey = await wallet.encrypt(process.env.PRIVATE_KEY_PASS!);
 	fs.writeFileSync('./.encryptedJsonKey.json', encryptedJsonKey);
 }
 

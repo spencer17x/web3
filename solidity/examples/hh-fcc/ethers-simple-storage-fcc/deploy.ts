@@ -10,7 +10,7 @@ async function main() {
 	const encryptedJsonKey = fs.readFileSync('./.encryptedJsonKey.json', 'utf8');
 	const wallet = (
 		await ethers.Wallet
-			.fromEncryptedJson(encryptedJsonKey, process.env.PRIVATE_KEY_PASS)
+			.fromEncryptedJson(encryptedJsonKey, process.env.PRIVATE_KEY_PASS!)
 	).connect(provider);
 
 	const abi = fs.readFileSync('./SimpleStorage_sol_SimpleStorage.abi', 'utf8');
@@ -18,7 +18,7 @@ async function main() {
 	const contraFactory = new ethers.ContractFactory(abi, binary, wallet);
 
 	console.log('Deploying, please wait...');
-	const contract: any = await contraFactory.deploy();
+	const contract = await contraFactory.deploy();
 	const transactionReceipt = await contract.deploymentTransaction()?.wait(1);
 	console.log('contract', contract);
 	console.log('transactionReceipt', transactionReceipt);
