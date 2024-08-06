@@ -1,0 +1,29 @@
+{
+  "name": "tg-eth-bot",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "test": "vitest"
+  },
+  "author": "",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "@uniswap/sdk-core": "^5.3.1",
+    "@uniswap/v3-sdk": "^3.13.1",
+    "alchemy-sdk": "^3.3.1",
+    "axios": "^1.7.2",
+    "cheerio": "1.0.0-rc.12",
+    "dayjs": "^1.11.12",
+    "dotenv": "^16.4.5",
+    "numbro": "^2.5.0",
+    "telegraf": "^4.16.3"
+  }
+}

@@ -3,3 +3,4 @@ packages:
   - 'components/**'
   - '!**/test/**'
   - 'web'
+  - 'tg-eth-bot'
