@@ -7,7 +7,7 @@ import * as fs from 'node:fs';
 import { Network } from 'alchemy-sdk';
 import { Telegraf } from 'telegraf';
 
-import { AlchemyService, DexService, GMGNService } from './services';
+import { AlchemyService, DexService, getBuyLinks, getCheckLinks, GMGNService } from './services';
 import { diffPercent, formatNumbro, formatPeoples, percent, renderStateUI } from './utils';
 import { message } from 'telegraf/filters';
 
@@ -99,7 +99,7 @@ const main = async () => {
 			`|——持有代币：${holdTokenSymbols.join(' | ') || '-'}`
 		];
 
-		// const { teams, checkLinks, buyLinks } = await dexService.getHtmlInfo(tokenAddress);
+		// const { teams } = await dexService.getHtmlInfo(tokenAddress);
 		// const teamsTemplate = [
 		// 	`历史团队`,
 		// 	...teams.map(team => {
@@ -107,12 +107,12 @@ const main = async () => {
 		// 		return `|——${team.name}：${linkTemplate}`;
 		// 	})
 		// ];
-		//
-		// const othersTemplate = [
-		// 	`相关链接`,
-		// 	`|——${checkLinks.map(link => `[${link.label}](${link.url})`).join(' | ')}`,
-		// 	`|——${buyLinks.map(link => `[${link.label}](${link.url})`).join(' | ')}`
-		// ];
+
+		const othersTemplate = [
+			`相关链接`,
+			`|——${getCheckLinks(tokenAddress).map(link => `[${link.label}](${link.url})`).join(' | ')}`,
+			`|——${getBuyLinks(tokenAddress).map(link => `[${link.label}](${link.url})`).join(' | ')}`
+		];
 
 		const template = [
 			tokenTemplate.join('\n'),
@@ -120,7 +120,7 @@ const main = async () => {
 			securityTemplate.join('\n'),
 			creatorTemplate.join('\n'),
 			// teamsTemplate.join('\n'),
-			// othersTemplate.join('\n'),
+			othersTemplate.join('\n'),
 		].join('\n\n');
 
 		if (isContractAddress) {

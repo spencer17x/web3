@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 
-import { Link } from './types';
-
 export class Service {
 	/**
 	 * 获取页面数据
@@ -57,44 +55,8 @@ export class Service {
 			})
 			.get();
 
-		const checkLinks: Link[] = [
-			{
-				label: 'GoPlus',
-				url: `https://gopluslabs.io/token-security/1/${tokenAddress}`,
-			},
-			{
-				label: 'Honeypot',
-				url: `https://honeypot.is/ethereum?address=${tokenAddress}`,
-			},
-			{
-				label: 'TokenSniffer',
-				url: `https://tokensniffer.com/token/eth/${tokenAddress}`,
-			}
-		];
-
-		const buyLinks: Link[] = [
-			{
-				label: 'Ave.ai',
-				url: `https://ave.ai/token/${tokenAddress}-eth`,
-			},
-			{
-				label: 'DEXScreener',
-				url: `https://dexscreener.com/ethereum/${tokenAddress}`,
-			},
-			{
-				label: 'DEXTools',
-				url: `https://www.dextools.io/app/cn/ether/pair-explorer/${tokenAddress}`
-			},
-			{
-				label: 'GMGN',
-				url: `https://gmgn.ai/eth/token/${tokenAddress}`
-			}
-		];
-
 		return {
-			teams,
-			checkLinks,
-			buyLinks
+			teams
 		};
 	}
 }
