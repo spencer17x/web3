@@ -34,16 +34,6 @@ export const diff = (value: any, value2: any): number => {
 	return numbro(value).subtract(numbro(value2).value()).value();
 };
 
-export const diffPercent = (value: any, value2: any): string => {
-	return percent(
-		numbro(
-			diff(value, value2)
-		).divide(
-			numbro(value2).value()
-		)
-	);
-};
-
 export const percent = (value: any): string => {
 	return numbro(value).format({
 		output: 'percent',

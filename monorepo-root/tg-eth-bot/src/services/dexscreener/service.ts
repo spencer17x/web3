@@ -1,14 +1,34 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 
+import { request } from './request';
+import { TokensResponse } from './types';
+
 export class Service {
+	pageUrl = 'https://dexscreener.com';
+	apiUrl = 'https://api.dexscreener.com';
+	marketplacePageUrl = `https://marketplace.dexscreener.com`;
+	chainId: string = 'ethereum';
+
+	getPageUrl(tokenAddress: string) {
+		return `${this.pageUrl}/${this.chainId}/${tokenAddress}`;
+	}
+
+	getOrderStatusPageUrl(tokenAddress: string) {
+		return `${this.marketplacePageUrl}/order-status/${this.chainId}/${tokenAddress}`;
+	}
+
+	getTokenPairApiUrl(tokenAddress: string) {
+		return `${this.apiUrl}/latest/dex/tokens/${tokenAddress}`;
+	}
+
 	/**
 	 * 获取页面数据
 	 * @param tokenAddress
 	 */
-	async getHtmlInfo(tokenAddress: string) {
+	async getInfoByPage(tokenAddress: string) {
 		const htmlResponse = await axios.get(
-			`https://dexscreener.com/ethereum/${tokenAddress}`,
+			this.getPageUrl(tokenAddress),
 			{
 				headers: {
 					'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -58,5 +78,30 @@ export class Service {
 		return {
 			teams
 		};
+	}
+
+	/**
+	 * 获取订单状态
+	 * @param tokenAddress
+	 */
+	async getOrderStatus(tokenAddress: string) {
+		const htmlResponse = await axios.get(
+			this.getOrderStatusPageUrl(tokenAddress)
+		);
+		const $ = load(htmlResponse.data);
+
+	}
+
+	/**
+	 * 获取token pair
+	 * @param tokenAddress
+	 */
+	async getTokenPair(tokenAddress: string) {
+		const response = await request.get<TokensResponse, TokensResponse>(
+			this.getTokenPairApiUrl(tokenAddress)
+		);
+		return response.pairs?.find(
+			(pair) => pair.chainId?.toLowerCase() === this.chainId
+		);
 	}
 }
