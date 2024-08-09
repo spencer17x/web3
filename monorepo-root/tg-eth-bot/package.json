@@ -2,15 +2,24 @@
   "name": "tg-eth-bot",
   "version": "1.0.0",
   "description": "",
-  "type": "commonjs",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
+    "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript --bundleConfigAsCjs",
+    "start": "pm2 start src/index.ts --interpreter ts-node --name twitter-bot -o ./logs/out.log -e ./logs/error.log",
     "test": "vitest"
   },
   "author": "",
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.0",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.14.9",
     "nodemon": "^3.1.4",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.20.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vitest": "^2.0.5"
@@ -24,6 +33,7 @@
     "dayjs": "^1.11.12",
     "dotenv": "^16.4.5",
     "numbro": "^2.5.0",
-    "telegraf": "^4.16.3"
+    "telegraf": "^4.16.3",
+    "tslib": "^2.6.3"
   }
 }

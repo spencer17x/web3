@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import * as process from 'node:process';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
@@ -10,6 +9,7 @@ import { message } from 'telegraf/filters';
 
 import { AlchemyService, DexService, getBuyLinks, getCheckLinks, GMGNService } from './services';
 import { formatNumbro, formatPeoples, percent, renderStateUI } from './utils';
+import { alchemyApiKey, botToken } from './config';
 
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
@@ -17,12 +17,12 @@ dayjs.extend(relativeTime);
 const main = async () => {
 	const gmgnService = new GMGNService.Service();
 	const alchemyService = new AlchemyService.Service({
-		apiKey: process.env.ALCHEMY_API_KEY,
+		apiKey: alchemyApiKey,
 		network: Network.ETH_MAINNET
 	});
 	const dexService = new DexService.Service();
 
-	const bot = new Telegraf(process.env.BOT_TOKEN!);
+	const bot = new Telegraf(botToken);
 	await new Promise((resolve) => bot.launch(() => resolve(null)));
 	console.log(`Bot 启动成功: ${new Date().toString()}`);
 

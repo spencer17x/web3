@@ -1,0 +1,1 @@
+pm2 start dist/index.js --name tg-eth-bot -o ./logs/out.log -e ./logs/error.log
